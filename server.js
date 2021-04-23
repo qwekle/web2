@@ -77,7 +77,7 @@ const documents = [
         }
     },
     {
-        'id': 40,
+        'id': 5,
         'createUser': 89115068341,
         'img': null,
         'createDate': 'test',
@@ -129,7 +129,13 @@ app.get('/document', (req, res) => {
     res.send(document);
 })
 app.post('/documents/create', (req, res) => {
-    documents.push(JSON.parse(JSON.stringify(req.body)));
+    let data = JSON.parse(JSON.stringify(req.body))
+    let max = 0;
+    documents.forEach(doc => {
+        if(doc.id > max) max = doc.id;
+    })
+    data.id = max + 1;
+    documents.push(data);
     res.send('');
 })
 app.post('/document/sign', (req, res) => {
